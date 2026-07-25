@@ -13,7 +13,10 @@ import {
   ClipboardList,
   Download,
   FolderOpen,
+  Moon,
+  Sun,
 } from 'lucide-react';
+import { useTheme } from '@/contexts/ThemeContext';
 import { getDepartments } from '@/lib/storage';
 import { cn } from '@/lib/utils';
 
@@ -58,18 +61,21 @@ export default function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 bottom-0 z-30 flex flex-col w-64 bg-[#1a2d45] text-slate-200">
       {/* Header */}
-      <div className="flex items-center gap-3 px-4 h-16 border-b border-slate-700/50">
-        <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/20 shrink-0">
-          <img
-            src="/manus-storage/logo-icon_4b6301b9.png"
-            alt="FUOYE Grading System"
-            className="w-6 h-6"
-          />
+      <div className="flex items-center justify-between px-4 h-16 border-b border-slate-700/50">
+        <div className="flex items-center gap-3">
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/20 shrink-0">
+            <img
+              src="/manus-storage/logo-icon_4b6301b9.png"
+              alt="FUOYE Grading System"
+              className="w-6 h-6"
+            />
+          </div>
+          <div className="flex flex-col overflow-hidden">
+            <span className="font-bold text-sm tracking-tight text-white">FUOYE</span>
+            <span className="text-[10px] text-slate-400 uppercase tracking-wider">GRADING SYSTEM</span>
+          </div>
         </div>
-        <div className="flex flex-col overflow-hidden">
-          <span className="font-bold text-sm tracking-tight text-white">FUOYE</span>
-          <span className="text-[10px] text-slate-400 uppercase tracking-wider">GRADING SYSTEM</span>
-        </div>
+        <ThemeToggle />
       </div>
 
       {/* Navigation */}
@@ -156,5 +162,23 @@ export default function Sidebar() {
         </div>
       )}
     </aside>
+  );
+}
+
+function ThemeToggle() {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <button
+      onClick={toggleTheme}
+      className="p-2 rounded-lg hover:bg-white/10 text-slate-400 hover:text-white transition-colors"
+      title={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+    >
+      {theme === 'light' ? (
+        <Moon size={18} />
+      ) : (
+        <Sun size={18} />
+      )}
+    </button>
   );
 }
