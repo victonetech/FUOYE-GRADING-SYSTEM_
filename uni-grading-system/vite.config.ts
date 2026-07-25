@@ -206,7 +206,7 @@ function vitePluginStorageProxy(): Plugin {
 const plugins = [react(), tailwindcss(), jsxLocPlugin(), vitePluginManusRuntime(), vitePluginManusDebugCollector(), vitePluginStorageProxy()];
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/FUOYE-GS/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/FUOYE-GRADING-SYSTEM_/' : '/',
   plugins,
   resolve: {
     alias: {

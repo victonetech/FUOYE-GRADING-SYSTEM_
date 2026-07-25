@@ -407,7 +407,7 @@ export default function Students() {
             <Input placeholder="Search by matric no or name..." value={search} onChange={(e) => setSearch(e.target.value)} className="pl-9" />
           </div>
           {deptFilter && (
-            <Button variant="outline" size="sm" onClick={() => window.location.href = '/students'}>
+            <Button variant="outline" size="sm" onClick={() => { const base = import.meta.env.BASE_URL || ''; window.location.href = base + 'students'; }}>
               Clear filter
             </Button>
           )}

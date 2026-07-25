@@ -63,12 +63,8 @@ export default function Sidebar() {
       {/* Header */}
       <div className="flex items-center justify-between px-4 h-16 border-b border-slate-700/50">
         <div className="flex items-center gap-3">
-          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/20 shrink-0">
-            <img
-              src="/manus-storage/logo-icon_4b6301b9.png"
-              alt="FUOYE Grading System"
-              className="w-6 h-6"
-            />
+          <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-accent/20 shrink-0 text-white font-bold text-sm">
+            FG
           </div>
           <div className="flex flex-col overflow-hidden">
             <span className="font-bold text-sm tracking-tight text-white">FUOYE</span>
