@@ -91,7 +91,7 @@ export default function Courses() {
       toast.success('Course added');
     }
 
-    setCourses(getCourses());
+    setCourses(getCourses(session));
     setShowDialog(false);
   };
 
@@ -104,7 +104,7 @@ export default function Courses() {
       return;
     }
     deleteCourse(deleteTarget.id);
-    setCourses(getCourses());
+    setCourses(getCourses(session));
     toast.success('Course deleted');
     setDeleteTarget(null);
   };
