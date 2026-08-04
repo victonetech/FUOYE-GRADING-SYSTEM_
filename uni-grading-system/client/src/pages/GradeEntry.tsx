@@ -55,8 +55,8 @@ export default function GradeEntry() {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const departments = getDepartments();
-  const courses = getCourses();
   const { session, semester } = useSession();
+  const courses = getCourses(session);
   const students = getStudents(session);
   const grades = getGrades(session, semester);
 

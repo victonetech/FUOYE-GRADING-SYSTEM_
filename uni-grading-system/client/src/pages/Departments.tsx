@@ -13,7 +13,7 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import {
-  getFaculties, getDepartments, getCourses, getStudents,
+  getFaculties, getDepartments, getAllCourses, getAllStudents,
   addDepartment, updateDepartment, deleteDepartment, generateId,
   type Department,
 } from '@/lib/storage';
@@ -27,8 +27,8 @@ export default function Departments() {
   const [form, setForm] = useState({ name: '', code: '', facultyId: '', hod: '' });
 
   const faculties = getFaculties();
-  const courses = getCourses();
-  const students = getStudents();
+  const courses = getAllCourses();
+  const students = getAllStudents();
 
   const openCreate = () => {
     setEditing(null);
