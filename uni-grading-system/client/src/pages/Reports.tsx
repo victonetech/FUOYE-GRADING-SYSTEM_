@@ -5,6 +5,7 @@
  */
 import { useState, useMemo } from 'react';
 import Sidebar from '@/components/Sidebar';
+import { useSession } from '@/contexts/SessionContext';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
@@ -18,21 +19,25 @@ import {
 export default function Reports() {
   const [selectedDept, setSelectedDept] = useState('');
   const [selectedCourse, setSelectedCourse] = useState('');
+  const { session, semester } = useSession();
 
   const departments = getDepartments();
-  const courses = getCourses();
-  const students = getStudents();
-  const grades = getGrades();
+  const courses = getCourses(session);
+  const students = getStudents(session);
+  const grades = getGrades(session, semester);
 
   const deptCourses = useMemo(() =>
-    courses.filter(c => c.departmentId === selectedDept),
-    [courses, selectedDept]
+    courses.filter(c => c.departmentId === selectedDept && c.semester === semester),
+    [courses, selectedDept, semester]
   );
 
-  const courseStudents = useMemo(() =>
-    students.filter(s => s.departmentId === selectedDept).sort((a, b) => a.name.localeCompare(b.name)),
-    [students, selectedDept]
-  );
+  const courseStudents = useMemo(() => {
+    const selected = courses.find(c => c.id === selectedCourse);
+    return students
+      .filter(s => s.departmentId === selectedDept)
+      .filter(s => !selected || s.level === selected.level)
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [students, selectedDept, selectedCourse, courses]);
 
   const courseGrades = useMemo(() =>
     grades.filter(g => g.courseId === selectedCourse),

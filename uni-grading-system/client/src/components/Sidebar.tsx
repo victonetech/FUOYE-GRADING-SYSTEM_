@@ -17,6 +17,7 @@ import {
   Sun,
 } from 'lucide-react';
 import { useTheme } from '@/contexts/ThemeContext';
+import { useSession } from '@/contexts/SessionContext';
 import { getDepartments } from '@/lib/storage';
 import { cn } from '@/lib/utils';
 
@@ -31,21 +32,14 @@ export default function Sidebar() {
   const [location] = useLocation();
   const departments = getDepartments();
 
-  const [session, setSession] = useState(() => {
-    return localStorage.getItem('ugs_session') || '2024/2025';
-  });
-  const [semester, setSemester] = useState(() => {
-    return localStorage.getItem('ugs_semester') || 'first';
-  });
+  const { session, semester, setSession, setSemester } = useSession();
 
   const handleSessionChange = (s: string) => {
     setSession(s);
-    localStorage.setItem('ugs_session', s);
   };
 
   const handleSemesterChange = (sm: string) => {
     setSemester(sm);
-    localStorage.setItem('ugs_semester', sm);
   };
 
   const navItems = [

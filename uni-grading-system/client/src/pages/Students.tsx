@@ -6,6 +6,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'wouter';
 import Sidebar from '@/components/Sidebar';
+import { useSession } from '@/contexts/SessionContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -27,7 +28,7 @@ const CSV_TEMPLATE = 'MatricNo,FullName,DepartmentCode,Level,Email\n2024/CSC/001
 export default function Students() {
   const [searchParams] = useSearchParams();
   const deptFilter = searchParams.get('dept') || '';
-  const session = getCurrentSession();
+  const { session } = useSession();
   const [students, setStudents] = useState<Student[]>(getStudents(session));
   const [search, setSearch] = useState('');
   const [showDialog, setShowDialog] = useState(false);

@@ -2,8 +2,9 @@
  * Courses Page — Bureaucratic Modern
  * Manage courses: add, edit, delete
  */
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Sidebar from '@/components/Sidebar';
+import { useSession } from '@/contexts/SessionContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
@@ -13,13 +14,18 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Plus, Pencil, Trash2, Search } from 'lucide-react';
 import { toast } from 'sonner';
 import {
-  getDepartments, getCourses, getGrades,
+  getDepartments, getCourses, getGrades, getCurrentSession,
   addCourse, updateCourse, deleteCourse, generateId,
   type Course,
 } from '@/lib/storage';
 
 export default function Courses() {
-  const [courses, setCourses] = useState<Course[]>(getCourses());
+  const { session } = useSession();
+  const [courses, setCourses] = useState<Course[]>(getCourses(session));
+
+  useEffect(() => {
+    setCourses(getCourses(session));
+  }, [session]);
   const [search, setSearch] = useState('');
   const [showDialog, setShowDialog] = useState(false);
   const [editing, setEditing] = useState<Course | null>(null);
@@ -78,6 +84,7 @@ export default function Courses() {
         departmentId: form.departmentId,
         level: form.level as Course['level'],
         semester: form.semester as Course['semester'],
+        session: session,
         creditUnits,
         createdAt: new Date().toISOString(),
       });

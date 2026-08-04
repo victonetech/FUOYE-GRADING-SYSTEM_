@@ -5,6 +5,7 @@
  */
 import { useState, useMemo, useRef } from 'react';
 import Sidebar from '@/components/Sidebar';
+import { useSession } from '@/contexts/SessionContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -55,16 +56,13 @@ export default function GradeEntry() {
 
   const departments = getDepartments();
   const courses = getCourses();
-  const students = getStudents();
-  const grades = getGrades();
-
-  // Session from sidebar
-  const session = localStorage.getItem('ugs_session') || '2024/2025';
-  const semester = localStorage.getItem('ugs_semester') || 'first';
+  const { session, semester } = useSession();
+  const students = getStudents(session);
+  const grades = getGrades(session, semester);
 
   const deptCourses = useMemo(
-    () => courses.filter((c) => c.departmentId === selectedDept),
-    [courses, selectedDept]
+    () => courses.filter((c) => c.departmentId === selectedDept && c.semester === semester),
+    [courses, selectedDept, semester]
   );
 
   const courseStudents = useMemo(() => {
@@ -114,6 +112,8 @@ export default function GradeEntry() {
         id: generateId(),
         courseId: selectedCourse,
         studentId,
+        session,
+        semester,
         ca1: null,
         ca2: null,
         totalCa: null,
@@ -328,6 +328,8 @@ export default function GradeEntry() {
         id: generateId(),
         courseId: selectedCourse,
         studentId: student.id,
+        session,
+        semester,
         ca1: null,
         ca2: null,
         totalCa: null,

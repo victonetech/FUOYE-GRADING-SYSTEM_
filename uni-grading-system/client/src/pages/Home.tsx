@@ -4,6 +4,7 @@
  * Clean stat cards, minimal decoration, data-first layout
  */
 import Sidebar from '@/components/Sidebar';
+import { useSession } from '@/contexts/SessionContext';
 import {
   getFaculties,
   getDepartments,
@@ -22,11 +23,12 @@ import {
 import { Link } from 'wouter';
 
 export default function Home() {
+  const { session, semester } = useSession();
   const faculties = getFaculties();
   const departments = getDepartments();
-  const courses = getCourses();
-  const students = getStudents();
-  const grades = getGrades();
+  const courses = getCourses(session);
+  const students = getStudents(session);
+  const grades = getGrades(session, semester);
 
   const gradedStudents = grades.filter(g => g.grade !== null).length;
   const pendingGrades = grades.filter(g => g.grade === null).length;
